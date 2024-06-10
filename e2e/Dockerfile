@@ -3,15 +3,15 @@ ARG NODE_VERSION='20.10.0'
 
 FROM cypress/factory:latest
 
-WORKDIR /
+WORKDIR /opt/app
 # Set NODE_OPTIONS environment variable
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 RUN npm install -g pnpm
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml /opt/app
 
 RUN pnpm install --frozen-lockfile
 
 RUN pnpm exec playwright install --with-deps webkit
 
-COPY . .
+COPY . /opt/app
